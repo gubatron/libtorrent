@@ -220,15 +220,6 @@ void lsd::on_announce(error_code const& ec)
 	m_socket.async_receive(boost::asio::null_buffers{}
 		, std::bind(&lsd::on_announce, self(), _1));
 
-	if (!match_addr_mask(from.address(), m_listen_address, m_netmask))
-	{
-		// we don't care about this network. Ignore this packet
-#ifndef TORRENT_DISABLE_LOGGING
-		debug_log("<== LSD: receive from out of network: %s"
-			, from.address().to_string().c_str());
-#endif
-		return;
-	}
 
 	if (err)
 	{
